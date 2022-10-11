@@ -9,11 +9,13 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: #0B2434;
+  font-family: 'Karla', sans-serif;
 }
 
-main{
+main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin: 4em 0;
   background: #F5F5F5;
@@ -23,6 +25,21 @@ main{
   border-radius: 10px;
 }
 
-h1{
-  letter-spacing: 2px;
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.die {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  font-size: 2.5em;
+  font-weight: 700;
+  background: #FFFFFF;
+  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 }
