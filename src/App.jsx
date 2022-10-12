@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Die from './components/Die'
+import { nanoid } from 'nanoid'
 
 function App() {
 
@@ -8,29 +9,40 @@ function App() {
   function allNewDice() {
     const newDice = [];
     for (let i = 0; i < 10; i++) {
-      newDice.push(Math.ceil(Math.random() * 6)) //pushes 10 random value of numbers 1-6
+      //pushes 10 random value of numbers 1-6
+      newDice.push({
+        value: Math.ceil(Math.random() * 6),
+        isHeld: false,
+        id: nanoid()
+      })
     }
 
     return newDice
   }
 
-  const diceElements = dice.map(die => <Die value={die} />) //map over the dice array
+  //Map over the dice array 
+  //Then render Die component x times of number of array items
+  const diceElements = dice.map(die =>
+    <Die
+      key={die.id}
+      value={die.value}
+    />)
 
-  function rollDice(){
+  function rollDice() {
     setDice(allNewDice())
   }
 
   return (
     <div className="App">
       <main>
-      <div className="text-container">
-        <h1>Tenzies</h1>
-        <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
-      </div>
+        <div className="text-container">
+          <h1>Tenzies</h1>
+          <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+        </div>
         <div className="container">
           {diceElements}
         </div>
-        <button onClick={rollDice}>Roll</button>
+        <button className="roll-dice" onClick={rollDice}>Roll</button>
       </main>
     </div>
   )
