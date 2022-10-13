@@ -4,6 +4,15 @@ import { nanoid } from 'nanoid'
 
 function App() {
 
+  /**
+ * Challenge: Add conditional styling to the Die component
+ * so that if it's held (isHeld === true), its background color
+ * changes to a light green (#59E391)
+ * 
+ * Remember: currently the Die component has no way of knowing
+ * if it's "held" or not.
+ */
+
   const [dice, setDice] = useState(allNewDice())
 
   function allNewDice() {
@@ -20,17 +29,31 @@ function App() {
     return newDice
   }
 
+  function rollDice() {
+    setDice(allNewDice())
+  }
+
+  function toggleHeld(id) {
+    setDice(prevDice => {
+      return prevDice.map((die) => {
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die
+      })
+    })
+  }
+
+
   //Map over the dice array 
   //Then render Die component x times of number of array items
   const diceElements = dice.map(die =>
     <Die
       key={die.id}
       value={die.value}
-    />)
+      toggleHeld={toggleHeld}
+      id={die.id}
+      isHeld={die.isHeld}
+    />
+  )
 
-  function rollDice() {
-    setDice(allNewDice())
-  }
 
   return (
     <div className="App">
