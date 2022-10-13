@@ -7,10 +7,10 @@ export default function Die(props) {
     }
 
     return (
-        <div 
-        style={styles} 
-        className="die-face" 
-        onClick={() => props.toggleHeld(props.id)}
+        <div
+            style={styles}
+            className="die-face"
+            onClick={props.holdDice}
         >
             <h1 className="die-num">{props.value}</h1>
         </div>

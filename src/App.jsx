@@ -4,13 +4,14 @@ import { nanoid } from 'nanoid'
 
 function App() {
 
-  /**
- * Challenge: Add conditional styling to the Die component
- * so that if it's held (isHeld === true), its background color
- * changes to a light green (#59E391)
+/**
+ * Challenge: Update the `rollDice` function to not just roll
+ * all new dice, but instead to look through the existing dice
+ * to NOT role any that are being `held`.
  * 
- * Remember: currently the Die component has no way of knowing
- * if it's "held" or not.
+ * Hint: this will look relatively similiar to the `holdDice`
+ * function below. When creating new dice, remember to use
+ * `id: nanoid()` so any new dice have an `id` as well.
  */
 
   const [dice, setDice] = useState(allNewDice())
@@ -33,24 +34,21 @@ function App() {
     setDice(allNewDice())
   }
 
-  function toggleHeld(id) {
-    setDice(prevDice => {
-      return prevDice.map((die) => {
+  function holdDice(id) {
+    setDice(oldDice => {
+      return oldDice.map((die) => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die
       })
     })
   }
-
-
   //Map over the dice array 
   //Then render Die component x times of number of array items
   const diceElements = dice.map(die =>
     <Die
       key={die.id}
       value={die.value}
-      toggleHeld={toggleHeld}
-      id={die.id}
       isHeld={die.isHeld}
+      holdDice={() => holdDice(die.id)}
     />
   )
 
