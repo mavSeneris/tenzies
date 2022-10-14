@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Die from './components/Die'
 import { nanoid } from 'nanoid'
 
 function App() {
   const [dice, setDice] = useState(allNewDice())
+  const [tenzies, setTenzies] = useState(false)
+
+  useEffect(() => {
+    if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
+      setTenzies(true)
+      console.log("You have won!")
+    }
+  },[dice])
 
   function generateNewDice() {
     return {
@@ -20,7 +28,6 @@ function App() {
     }
     return newDice
   }
-
 
   function rollDice() {
     setDice(currentDice => {
@@ -48,7 +55,6 @@ function App() {
     />
   )
 
-
   return (
     <div className="App">
       <main>
@@ -66,3 +72,6 @@ function App() {
 }
 
 export default App
+
+
+
