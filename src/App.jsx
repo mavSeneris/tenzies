@@ -3,35 +3,33 @@ import Die from './components/Die'
 import { nanoid } from 'nanoid'
 
 function App() {
-
-/**
- * Challenge: Update the `rollDice` function to not just roll
- * all new dice, but instead to look through the existing dice
- * to NOT role any that are being `held`.
- * 
- * Hint: this will look relatively similiar to the `holdDice`
- * function below. When creating new dice, remember to use
- * `id: nanoid()` so any new dice have an `id` as well.
- */
-
   const [dice, setDice] = useState(allNewDice())
+
+  function generateNewDice() {
+    return {
+      value: Math.ceil(Math.random() * 6),
+      isHeld: false,
+      id: nanoid()
+    }
+  }
 
   function allNewDice() {
     const newDice = [];
     for (let i = 0; i < 10; i++) {
-      //pushes 10 random value of numbers 1-6
-      newDice.push({
-        value: Math.ceil(Math.random() * 6),
-        isHeld: false,
-        id: nanoid()
-      })
+      newDice.push(generateNewDice())
     }
-
     return newDice
   }
 
+
   function rollDice() {
-    setDice(allNewDice())
+    setDice(currentDice => {
+      return currentDice.map((die) => {
+        return die.isHeld === true ?
+          { ...die } :
+          generateNewDice()
+      })
+    })
   }
 
   function holdDice(id) {
@@ -41,8 +39,6 @@ function App() {
       })
     })
   }
-  //Map over the dice array 
-  //Then render Die component x times of number of array items
   const diceElements = dice.map(die =>
     <Die
       key={die.id}
