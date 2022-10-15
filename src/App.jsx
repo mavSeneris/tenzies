@@ -2,15 +2,36 @@ import React, { useState, useEffect } from 'react'
 import Die from './components/Die'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
+import StopWatch from './components/Stopwatch'
 
 function App() {
   const [dice, setDice] = useState(allNewDice())
   const [tenzies, setTenzies] = useState(false)
   const [roll, setRoll] = useState(0)
+  const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(true);
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isActive && isPaused === false) {
+      interval = setInterval(() => {
+        setTime((time) => time + 10);
+      }, 10);
+    } else {
+      clearInterval(interval);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isActive, isPaused]);
+
 
   useEffect(() => {
     if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
       setTenzies(true)
+      setIsPaused(!isPaused);
     }
   }, [dice])
 
@@ -45,9 +66,13 @@ function App() {
     setTenzies(false)
     setDice(allNewDice())
     setRoll(0)
+    setIsActive(false);
+    setTime(0);
   }
 
   function holdDice(id) {
+    setIsActive(true);
+    setIsPaused(false);
     setDice(oldDice => {
       return oldDice.map((die) => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die
@@ -66,19 +91,22 @@ function App() {
 
   return (
     <div className="App">
-    {tenzies && <Confetti />}
+      {tenzies && <Confetti />}
       <main>
         <div className="text-container">
           {!tenzies ? <div>
             <h1>Tenzies</h1>
             <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
           </div> :
-          <h1>{`Yey! all ${dice[0].value}'s and you rolled ${roll} times`}</h1>
+            <h1 className='game-message'>{`Yey! all ${dice[0].value}'s and you rolled ${roll} times`}</h1>
           }
         </div>
         <div className="container">
           {diceElements}
         </div>
+        <StopWatch
+          time={time}
+        />
         {!tenzies ?
           <button className="roll-dice" onClick={rollDice}>{roll > 0 ? `Roll ${roll}` : `Roll`}</button> :
           <button className="roll-dice" onClick={resetDice}>New Game</button>
