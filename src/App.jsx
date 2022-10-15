@@ -60,6 +60,8 @@ function App() {
       })
     })
     setRoll(prevRoll => prevRoll + 1)
+    setIsActive(true);
+    setIsPaused(false);
   }
 
   function resetDice() {
