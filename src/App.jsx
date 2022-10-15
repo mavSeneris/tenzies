@@ -8,10 +8,6 @@ function App() {
   const [tenzies, setTenzies] = useState(false)
   const [roll, setRoll] = useState(0)
 
-  const time = new Date()
-  const min = time.getMinutes();
-  const sec = time.getSeconds();
-
   useEffect(() => {
     if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
       setTenzies(true)
