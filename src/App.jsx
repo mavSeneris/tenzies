@@ -6,11 +6,15 @@ import Confetti from 'react-confetti'
 function App() {
   const [dice, setDice] = useState(allNewDice())
   const [tenzies, setTenzies] = useState(false)
+  const [roll, setRoll] = useState(0)
+
+  const time = new Date()
+  const min = time.getMinutes();
+  const sec = time.getSeconds();
 
   useEffect(() => {
     if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
       setTenzies(true)
-      console.log("You have won!")
     }
   }, [dice])
 
@@ -38,11 +42,13 @@ function App() {
           generateNewDice()
       })
     })
+    setRoll(prevRoll => prevRoll + 1)
   }
 
   function resetDice() {
     setTenzies(false)
     setDice(allNewDice())
+    setRoll(0)
   }
 
   function holdDice(id) {
@@ -71,15 +77,15 @@ function App() {
             <h1>Tenzies</h1>
             <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
           </div> :
-          <h1>Yey! You have won!</h1>
+          <h1>{`Yey! all ${dice[0].value}'s and you rolled ${roll} times`}</h1>
           }
         </div>
         <div className="container">
           {diceElements}
         </div>
         {!tenzies ?
-          <button className="roll-dice" onClick={rollDice}>Roll</button> :
-          <button className="roll-dice" onClick={resetDice}>Reset Game</button>
+          <button className="roll-dice" onClick={rollDice}>{roll > 0 ? `Roll ${roll}` : `Roll`}</button> :
+          <button className="roll-dice" onClick={resetDice}>New Game</button>
         }
       </main>
     </div>
