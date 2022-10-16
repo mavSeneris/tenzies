@@ -3,6 +3,7 @@ import Die from './components/Die'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 import StopWatch from './components/Stopwatch'
+import PrevTime from './components/PrevTime'
 
 function App() {
   const [dice, setDice] = useState(allNewDice())
@@ -11,6 +12,11 @@ function App() {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
+  const [prevTime, setPrevTime] = useState()
+
+  useEffect(() => {
+    setPrevTime(JSON.parse(localStorage.getItem('time')))
+  })
 
   useEffect(() => {
     let interval = null;
@@ -114,8 +120,9 @@ function App() {
         <div className="container">
           {diceElements}
         </div>
-
-        <p>{JSON.parse(localStorage.getItem('time'))}</p>
+        <PrevTime
+          prevTime={prevTime}
+        />
 
         <StopWatch
           time={time}
