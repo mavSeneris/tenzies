@@ -12,11 +12,7 @@ function App() {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
-  const [prevTime, setPrevTime] = useState()
-
-  useEffect(() => {
-    setPrevTime(JSON.parse(localStorage.getItem('time')))
-  })
+  const [prevTime, setPrevTime] = useState(0)
 
   useEffect(() => {
     let interval = null;
@@ -33,19 +29,27 @@ function App() {
     };
   }, [isActive, isPaused]);
 
-
   useEffect(() => {
-    if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
+    const firstValue = dice[0].value
+    const allHeld = dice.every((die) => die.isHeld)
+    const diceValue = dice.every((die) => die.value === firstValue)
+    if (allHeld && diceValue) {
       setTenzies(true)
       setIsPaused(!isPaused);
     }
   }, [dice])
 
+  // TODO : Will be adding best time record
+
+  useEffect(() => {
+    setPrevTime(JSON.parse(localStorage.getItem('time')))
+  });
+
   function saveTime() {
-
     localStorage.setItem('time', JSON.stringify(time));
+  };
 
-  }
+  // TODO   ************+o0o+*************
 
   function generateNewDice() {
     return {
@@ -90,7 +94,8 @@ function App() {
     setIsPaused(false);
     setDice(oldDice => {
       return oldDice.map((die) => {
-        return die.id === id ? { ...die, isHeld: !die.isHeld } : die
+        return die.id === id ?
+          { ...die, isHeld: !die.isHeld } : die
       })
     })
   }
@@ -109,13 +114,18 @@ function App() {
       {tenzies && <Confetti />}
       <main>
         <div className="text-container">
-          {!tenzies ? <div>
-            <h1>Tenzies</h1>
-            <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
-          </div> :
-            <h1 className='game-message'>{`Yey! all ${dice[0].value}'s and you rolled ${roll} times`}</h1>
+          {!tenzies ?
+            <div>
+              <h1>Tenzies</h1>
+              <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+            </div> :
+
+            <h1 className='game-message'>
+              {`Yey! all ${dice[0].value}'s and you rolled ${roll} times`}
+            </h1>
           }
         </div>
+
         <div className="container">
           {diceElements}
         </div>
@@ -138,4 +148,9 @@ function App() {
 export default App
 
 
-
+// useEffect(() => {
+//   if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
+//     setTenzies(true)
+//     setIsPaused(!isPaused);
+//   }
+// }, [dice])

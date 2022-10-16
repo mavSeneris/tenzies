@@ -4,7 +4,7 @@ export default function PrevTime(props) {
     return (
         <div className="timer">
             <div className="best-time">
-                <h3>Time to beat:</h3>
+                <h3>Previous time:</h3>
             </div>
             <span className="prev-digits">
                 {("0" + Math.floor((props.prevTime / 60000) % 60)).slice(-2)}:
