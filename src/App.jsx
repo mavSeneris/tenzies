@@ -35,6 +35,12 @@ function App() {
     }
   }, [dice])
 
+  function saveTime() {
+
+    localStorage.setItem('time', JSON.stringify(time));
+
+  }
+
   function generateNewDice() {
     return {
       value: Math.ceil(Math.random() * 6),
@@ -68,8 +74,10 @@ function App() {
     setTenzies(false)
     setDice(allNewDice())
     setRoll(0)
+    saveTime()
     setIsActive(false);
     setTime(0);
+
   }
 
   function holdDice(id) {
@@ -106,6 +114,9 @@ function App() {
         <div className="container">
           {diceElements}
         </div>
+
+        <p>{JSON.parse(localStorage.getItem('time'))}</p>
+
         <StopWatch
           time={time}
         />
