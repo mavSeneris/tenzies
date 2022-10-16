@@ -83,7 +83,6 @@ function App() {
     saveTime()
     setIsActive(false);
     setTime(0);
-
   }
 
   function holdDice(id) {
