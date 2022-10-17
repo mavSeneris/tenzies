@@ -42,12 +42,14 @@ function App() {
   // TODO : Will be adding best time record
 
   useEffect(() => {
-    setPrevTime(JSON.parse(localStorage.getItem('time')))
+      setPrevTime(JSON.parse(localStorage.getItem('time')))
   });
 
-  function saveTime() {
-    localStorage.setItem('time', JSON.stringify(time));
-  };
+  useEffect(() => {
+    if (tenzies) {
+      localStorage.setItem('time', JSON.stringify(time));
+    }
+  }, [time])
 
   // TODO   ************+o0o+*************
 
@@ -84,7 +86,6 @@ function App() {
     setTenzies(false)
     setDice(allNewDice())
     setRoll(0)
-    saveTime()
     setIsActive(false);
     setTime(0);
   }
