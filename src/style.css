@@ -89,19 +89,7 @@ main {
   color: #4A4E74;
 }
 
-.die-face {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 80px;
-  font-size: 2.5em;
-  font-weight: 700;
-  background: #FFFFFF;
-  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  cursor: pointer;
-}
+
 
 .die-num {
   font-size: 3rem;

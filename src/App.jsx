@@ -80,6 +80,8 @@ function App() {
           generateNewDice()
       })
     })
+    setIsActive(true);
+    setIsPaused(false);
     setRoll(roll + 1)
   }
 
