@@ -15,4 +15,4 @@ export default function Timer(props) {
 			</span>
 		</div>
 	);
-}
+};

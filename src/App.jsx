@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import Die from './components/Die'
-import { nanoid } from 'nanoid'
-import Confetti from 'react-confetti'
-import StopWatch from './components/Stopwatch'
-import PrevTime from './components/PrevTime'
+import React, { useState, useEffect } from 'react';
+import Die from './components/Die';
+import { nanoid } from 'nanoid';
+import Confetti from 'react-confetti';
+import StopWatch from './components/Stopwatch';
+import PrevTime from './components/PrevTime';
 
 function App() {
-  const [dice, setDice] = useState(allNewDice())
-  const [tenzies, setTenzies] = useState(false)
-  const [roll, setRoll] = useState(0)
+  const [dice, setDice] = useState(allNewDice());
+  const [tenzies, setTenzies] = useState(false);
+  const [roll, setRoll] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
-  const [prevTime, setPrevTime] = useState(0)
+  const [prevTime, setPrevTime] = useState(0);
+  const [numFace, setNumFace] = useState(false)
+
 
 
   //  Timer Functionality
@@ -25,35 +27,34 @@ function App() {
       }, 10);
     } else {
       clearInterval(interval);
-    }
+    };
     return () => {
       clearInterval(interval);
     };
   }, [isActive, isPaused]);
 
-
   // End game conditions
   useEffect(() => {
-    const firstValue = dice[0].value
-    const allHeld = dice.every((die) => die.isHeld)
-    const diceValue = dice.every((die) => die.value === firstValue)
+    const firstValue = dice[0].value;
+    const allHeld = dice.every((die) => die.isHeld);
+    const diceValue = dice.every((die) => die.value === firstValue);
     if (allHeld && diceValue) {
-      setTenzies(true)
+      setTenzies(true);
       setIsPaused(!isPaused);
-    }
-  }, [dice])
+    };
+  }, [dice]);
 
   // gets last game elpapsed time to locaLStorage and set as the previous time
   useEffect(() => {
-    setPrevTime(JSON.parse(localStorage.getItem('time')))
+    setPrevTime(JSON.parse(localStorage.getItem('time')));
   });
 
   // saves current game elapsed time to localStorage
   useEffect(() => {
     if (tenzies) {
       localStorage.setItem('time', JSON.stringify(time));
-    }
-  }, [time])
+    };
+  }, [time]);
 
 
   function generateNewDice() {
@@ -61,35 +62,36 @@ function App() {
       value: Math.ceil(Math.random() * 6),
       isHeld: false,
       id: nanoid()
-    }
-  }
+    };
+  };
 
   function allNewDice() {
     const newDice = [];
     for (let i = 0; i < 10; i++) {
-      newDice.push(generateNewDice())
+      newDice.push(generateNewDice());
     }
-    return newDice
-  }
+    return newDice;
+  };
 
+  //* Buttons
   function rollDice() {
     setDice(currentDice => {
       return currentDice.map((die) => {
         return die.isHeld === true ?
           { ...die } :
-          generateNewDice()
-      })
-    })
+          generateNewDice();
+      });
+    });
     setIsActive(true);
     setIsPaused(false);
-    setRoll(roll + 1)
-  }
+    setRoll(roll + 1);
+  };
 
   // Resets the game and timer if the game is won.
   function resetDice() {
-    setTenzies(false)
-    setDice(allNewDice())
-    setRoll(0)
+    setTenzies(false);
+    setDice(allNewDice());
+    setRoll(0);
     setIsActive(false);
     setTime(0);
   }
@@ -99,12 +101,18 @@ function App() {
       return oldDice.map((die) => {
         return die.id === id ?
           { ...die, isHeld: !die.isHeld } : die
-      })
-    })
+      });
+    });
     // starts timer when any die is clicked
     setIsActive(true);
     setIsPaused(false);
+
+  };
+
+  function setFace() {
+    setNumFace(!numFace);
   }
+  //* .................................
 
   const diceElements = dice.map(die =>
     <Die
@@ -112,13 +120,19 @@ function App() {
       value={die.value}
       isHeld={die.isHeld}
       holdDice={() => holdDice(die.id)}
+      numFace={numFace}
     />
-  )
+  );
 
   return (
     <div className="App">
       {tenzies && <Confetti />}
       <main>
+
+        <div className="face-setter">
+          <button onClick={setFace}>{numFace ? "Numbers" : "Dice"}</button>
+        </div>
+
         <div className="text-container">
           {!tenzies ?
             <div>
@@ -154,11 +168,3 @@ function App() {
 }
 
 export default App
-
-
-// useEffect(() => {
-//   if (dice.every((die) => die.isHeld && die.value === dice[0].value)) {
-//     setTenzies(true)
-//     setIsPaused(!isPaused);
-//   }
-// }, [dice]) old code
