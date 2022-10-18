@@ -32,6 +32,8 @@ main {
   padding: 70px 0;
   background: #F5F5F5;
   width: 80vw;
+  max-width: 900px;
+  min-width: 900px;
   height: 80vw;
   max-height: 800px;
   border-radius: 10px;
