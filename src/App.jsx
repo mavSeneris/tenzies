@@ -14,6 +14,8 @@ function App() {
   const [time, setTime] = useState(0);
   const [prevTime, setPrevTime] = useState(0)
 
+
+  //  Timer Functionality
   useEffect(() => {
     let interval = null;
 
@@ -29,6 +31,8 @@ function App() {
     };
   }, [isActive, isPaused]);
 
+
+  // End game conditions
   useEffect(() => {
     const firstValue = dice[0].value
     const allHeld = dice.every((die) => die.isHeld)
@@ -39,19 +43,18 @@ function App() {
     }
   }, [dice])
 
-  // TODO : Will be adding best time record
-
+  // gets last game elpapsed time to locaLStorage and set as the previous time
   useEffect(() => {
-      setPrevTime(JSON.parse(localStorage.getItem('time')))
+    setPrevTime(JSON.parse(localStorage.getItem('time')))
   });
 
+  // saves current game elapsed time to localStorage
   useEffect(() => {
     if (tenzies) {
       localStorage.setItem('time', JSON.stringify(time));
     }
   }, [time])
 
-  // TODO   ************+o0o+*************
 
   function generateNewDice() {
     return {
@@ -77,11 +80,10 @@ function App() {
           generateNewDice()
       })
     })
-    setRoll(prevRoll => prevRoll + 1)
-    setIsActive(true);
-    setIsPaused(false);
+    setRoll(roll + 1)
   }
 
+  // Resets the game and timer if the game is won.
   function resetDice() {
     setTenzies(false)
     setDice(allNewDice())
@@ -91,14 +93,15 @@ function App() {
   }
 
   function holdDice(id) {
-    setIsActive(true);
-    setIsPaused(false);
     setDice(oldDice => {
       return oldDice.map((die) => {
         return die.id === id ?
           { ...die, isHeld: !die.isHeld } : die
       })
     })
+    // starts timer when any die is clicked
+    setIsActive(true);
+    setIsPaused(false);
   }
 
   const diceElements = dice.map(die =>
@@ -130,6 +133,7 @@ function App() {
         <div className="container">
           {diceElements}
         </div>
+
         <PrevTime
           prevTime={prevTime}
         />
@@ -137,6 +141,7 @@ function App() {
         <StopWatch
           time={time}
         />
+
         {!tenzies ?
           <button className="roll-dice" onClick={rollDice}>{roll > 0 ? `Roll ${roll}` : `Roll`}</button> :
           <button className="roll-dice" onClick={resetDice}>New Game</button>
