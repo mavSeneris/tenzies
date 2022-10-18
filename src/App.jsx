@@ -154,4 +154,4 @@ export default App
 //     setTenzies(true)
 //     setIsPaused(!isPaused);
 //   }
-// }, [dice])
+// }, [dice]) old code
