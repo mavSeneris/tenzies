@@ -7,12 +7,13 @@ export default function Die(props) {
         backgroundColor: props.isHeld ? "#59E391" : "white"
     };
 
+
     return (
         <div>
             {props.numFace ?
                 <div
                     style={styles}
-                    className="dieNum-face"
+                    className={props.tenzies ? "dieNum-face shakeDice" : "dieNum-face"}
                     onClick={props.holdDice}
                 >
                     <h1 className="die-num">{props.value}</h1>
@@ -22,7 +23,7 @@ export default function Die(props) {
 
                 <div
                     style={styles}
-                    className={`die-face dice${props.value}`}
+                    className={props.tenzies? `die-face dice${props.value} shakeDice`: `die-face dice${props.value}`}
                     onClick={props.holdDice}
                 >
                     {

@@ -121,6 +121,7 @@ function App() {
       isHeld={die.isHeld}
       holdDice={() => holdDice(die.id)}
       numFace={numFace}
+      tenzies={tenzies}
     />
   );
 
@@ -129,9 +130,9 @@ function App() {
       {tenzies && <Confetti />}
       <main>
 
-        <div className="face-setter">
-          <button onClick={setFace}>{numFace ? "Numbers" : "Dice"}</button>
-        </div>
+        {!tenzies && <div className="face-setter">
+          <button onClick={setFace}>{numFace ? "#" : "Die"}</button>
+        </div>}
 
         <div className="text-container">
           {!tenzies ?
