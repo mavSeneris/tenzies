@@ -62,32 +62,32 @@ export default function Die(props) {
                     {
                         props.value === 5 &&
                         <>
-                            <div class="column">
-                                <span class="dot"></span>
-                                <span class="dot bottom"></span>
+                            <div className="column">
+                                <span className="dot"></span>
+                                <span className="dot bottom"></span>
                             </div>
 
-                            <div class="column">
-                                <span class="dot"></span>
+                            <div className="column">
+                                <span className="dot"></span>
                             </div>
 
-                            <div class="column">
-                                <span class="dot"></span>
-                                <span class="dot bottom"></span>
+                            <div className="column">
+                                <span className="dot"></span>
+                                <span className="dot bottom"></span>
                             </div>
                         </>
                     }
                     {
                         props.value === 6 &&
                         <>
-                            <div class="column">
-                                <span class="dot"></span>
-                                <span class="dot mid"></span>
-                                <span class="dot"></span>
-                            </div><div class="column">
-                                <span class="dot"></span>
-                                <span class="dot mid"></span>
-                                <span class="dot"></span>
+                            <div className="column">
+                                <span className="dot"></span>
+                                <span className="dot mid"></span>
+                                <span className="dot"></span>
+                            </div><div className="column">
+                                <span className="dot"></span>
+                                <span className="dot mid"></span>
+                                <span className="dot"></span>
                             </div>
                         </>
                     }
