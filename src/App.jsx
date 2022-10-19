@@ -13,7 +13,7 @@ function App() {
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
   const [prevTime, setPrevTime] = useState(0);
-  const [numFace, setNumFace] = useState(false)
+  const [dieFace, setDieFace] = useState(false)
 
 
 
@@ -110,7 +110,7 @@ function App() {
   };
 
   function setFace() {
-    setNumFace(!numFace);
+    setDieFace(!dieFace);
   }
   //* .................................
 
@@ -120,7 +120,7 @@ function App() {
       value={die.value}
       isHeld={die.isHeld}
       holdDice={() => holdDice(die.id)}
-      numFace={numFace}
+      dieFace={dieFace}
       tenzies={tenzies}
     />
   );
@@ -130,9 +130,12 @@ function App() {
       {tenzies && <Confetti />}
       <main>
 
-        {!tenzies && <div className="face-setter">
-          <button onClick={setFace}>{numFace ? "#" : "Die"}</button>
-        </div>}
+        {!tenzies &&
+          <div className="face-setter">
+            <button onClick={setFace}>
+              {dieFace ? "#" : "Die"}
+            </button>
+          </div>}
 
         <div className="text-container">
           {!tenzies ?

@@ -10,7 +10,7 @@ export default function Die(props) {
 
     return (
         <div>
-            {props.numFace ?
+            {props.dieFace ?
                 <div
                     style={styles}
                     className={props.tenzies ? "dieNum-face shakeDice" : "dieNum-face"}
