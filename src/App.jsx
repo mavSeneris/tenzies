@@ -106,7 +106,9 @@ function App() {
     // starts timer when any die is clicked
     setIsActive(true);
     setIsPaused(false);
-
+    if (tenzies){
+      resetDice()
+    }
   };
 
   function setFace() {
